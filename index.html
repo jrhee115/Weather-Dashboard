@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+<link rel="stylesheet" href="Assets/style.css">
+<title>Weather</title>
 </head>
 <body>
-    <!--Title-->
-    <h1><strong>Weather Dashboard</strong></h1>
-    <div class="container">
+    <header class="container-fluid text-center">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-4 bg-light">
-                <h2 class="pt-1">Search for a City</h2>
-                <!--create a text box-->
-                <div class="input-text"></div>
-                    <input type="text" class="search-form" id="search-city">
-                    <div class="input-group">
-                        <button class="btn bg-primary text-light" id="search-button"><i class="fa fa-search"></i></button>
-                    </div>
+            <aside class="col-md-3 bg-light">
+                <h5>Search for a City</h5>
+            </aside>
+            <div class="form-inline form-group">
+                <input class="form-control" type="text" id="search-value"/>
+                <button class="btn btn-primary" id="search-button"><i class="fa fa-search"></i></button>
             </div>
-            <!--incorporated a clear history button-->
-            <button class="btn bg-primary" type="button" id="clear history">Clear history</button>
-            <ul class="list">
-
-            </ul>
         </div>
-        
     </div>
+    <div class="container">
+        <div class="" id="today"></div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="Assets/script.js"></script>
 </body>
 </html>
+
+
