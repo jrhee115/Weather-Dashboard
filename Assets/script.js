@@ -52,15 +52,22 @@ function searchWeather(searchValue){
 
     //function to get the forecast(its a different URL)
     //use a forloop to loop over all forcast (by spec)
-    function forecastWeather(){
         $.ajax({
-            method: "GET",
             url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=b15857b75000df26bc3646e1cbb33de4",
-            dataType: "json"
+            dataType: "json",
+            type: "GET",
+            data: {
+                q: searchValue,
+                units: "metric",
+                cnt: "10"
+            },
         }).then(function(data){
-            
+            console.log("data: ", data);
+            var fiveDay = "";
+            fiveDay += "<h2>" + data.searchValue + "</h2>";
+            $.each(data.list, function(index, val))
         })
-    }
+    
     //get current search history, if there is any
 
     //search 
