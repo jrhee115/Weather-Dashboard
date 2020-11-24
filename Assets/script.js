@@ -9,9 +9,6 @@ $("#search-button").on("click", function(){
     searchWeather(searchValue);
 });
 
-var uvLat ="";
-var uvLon ="";
-
 function searchWeather(searchValue){
     $.ajax({
         type: "GET",
@@ -19,8 +16,6 @@ function searchWeather(searchValue){
         dataType: "json", 
     }).then(function(data){
         console.log(data);
-        uvLat = data.coord.lat;
-        uvLon = data.coord.lon;
         //create a history link for the search (loop up .push())
 
         $("#today").empty();
@@ -30,47 +25,66 @@ function searchWeather(searchValue){
         var card = $("<div>").addClass("card");
         var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + "mph");
         var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
-        var temp = $("<p>").addClass("card-text").text("Temp " + data.main.temp);
-        // var tempF = (temp - 273.15) * 1.8 + 32;
-        var cardBody = $("<div>").addClass("card-body");
+        var temp = $("<p>").addClass("card-text").text("Temp: " + data.main.temp + "°F");
+        var badgeURL = "http://openweathermap.org/img/w/" + data.weather[0].com + ".png";
+        var badge = $("img").attr("src", badgeURL);
 
+        var cardBody = $("<div>").addClass("card-body");
         cardBody.append(title, wind,humid, temp);
         card.append(cardBody);
+        title.append(badge);
         $("#today").append(card);
-        getUV();
-    
+        getUV(data.coord.lat, data.coord.lon);
+
+        fiveDay(searchValue);
+    });
+}
     //function to get UV index (another different URL)
-    function getUV() {
+    function getUV(lat, lon) {
         $.ajax({
-            url: "https://api.openweathermap.org/data/2.5/uvi?appid=b15857b75000df26bc3646e1cbb33de4&lat="+ uvLat +"&lon=" + uvLon,
+            type: "GET",
+            url: "http://api.openweathermap.org/data/2.5/uvi?lat="+ lat + "&lon=" + lon + "&appid=b15857b75000df26bc3646e1cbb33de4",
             dataType: "json"
         }).then(function(data){
-            console.log(data);
-        })
+            // console.log(data);
+            var uv = $("<p>").addClass("card-text").text("UV Index: ");
+            var inDex = $("<span>").text(`${data.value}`);
+
+            if (data.value < 3) {
+                inDex.addClass("low")
+            }
+            else if (data.value <=5) {
+                inDex.addClass("medium")
+            } 
+            else{
+                inDex.addClass("high")
+            }
+            uv.append(inDex);
+            $("#searchWeather").append(uv);
+        });
     }
 
 
     //function to get the forecast(its a different URL)
     //use a forloop to loop over all forcast (by spec)
-        $.ajax({
-            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=b15857b75000df26bc3646e1cbb33de4",
-            dataType: "json",
-            type: "GET",
-            data: {
-                q: searchValue,
-                units: "metric",
-                cnt: "10"
-            },
-        }).then(function(data){
-            console.log("data: ", data);
-            var fiveDay = "";
-            fiveDay += "<h2>" + data.searchValue + "</h2>";
-            $.each(data.list, function(index, val))
-        })
+        // $.ajax({
+        //     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=b15857b75000df26bc3646e1cbb33de4",
+        //     dataType: "json",
+        //     type: "GET",
+        //     data: {
+        //         q: searchValue,
+        //         units: "metric",
+        //         cnt: "10"
+        //     },
+        // }).then(function(data){
+        //     console.log("data: ", data);
+        //     var fiveDay = "";
+        //     fiveDay += "<h2>" + data.searchValue + "</h2>";
+        //     $.each(data.list, function(index, val)
+        // })
     
     //get current search history, if there is any
 
     //search 
 })
-}
-})
+
