@@ -61,7 +61,7 @@ $(document).ready(function () {
                 inDex.addClass("high");
             }
             inDex.append(uvIndex);
-            $("#searchWeather").append(inDex);
+            $("#today").append(inDex);
         });
     };
     // 5 day forceast
