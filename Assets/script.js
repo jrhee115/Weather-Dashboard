@@ -125,4 +125,9 @@ $(document).ready(function () {
             })
         }
     }
+    function showHistory() {
+        var searched = localStorage.getItem("saveHistory");
+        searchWeather(searched)
+    }
+    showHistory();
 })
