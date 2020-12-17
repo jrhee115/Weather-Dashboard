@@ -47,6 +47,7 @@ $(document).ready(function () {
             url: `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=b15857b75000df26bc3646e1cbb33de4`,
             dataType: "json",
         }).then(function (data) {
+            console.log(data);
             var inDex = $("<p>").addClass("card-text").text(`UV Index: `);
             var uvIndex = $("<span>").text(`${data.value}`);
 
