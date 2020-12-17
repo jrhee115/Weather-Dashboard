@@ -17,7 +17,7 @@ $(document).ready(function () {
         }).then(function (data) {
             console.log(data);
 
-            //create a history link for the search (loop up .push())
+            saveHistory(searchValue);
 
             $("#today").empty();
 
@@ -45,10 +45,10 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=b15857b75000df26bc3646e1cbb33de4`,
-            dataType: "json"
+            dataType: "json",
         }).then(function (data) {
-            // console.log(data);
-            var inDex = $("<p>").addClass("card-text").text("UV Index: " + data.value);
+            var inDex = $("<p>").addClass("card-text").text(`UV Index: `);
+            var uvIndex = $("<span>").text(`${data.value}`);
 
             if (data.value < 3) {
                 inDex.addClass("low");
@@ -59,6 +59,7 @@ $(document).ready(function () {
             else {
                 inDex.addClass("high");
             }
+            inDex.append(uvIndex);
             $("#searchWeather").append(inDex);
         });
     };
@@ -103,5 +104,24 @@ $(document).ready(function () {
                 $("#forecastdays").append(col);
             }
         });
+    }
+
+    var history= [];
+
+    function saveHistory(searchedCity){
+        localStorage.setItem("savedSearch", searchedCity);
+
+        if(!history.includes(searchedCity)){
+            history.push(searchedCity);
+            var cityName = $("<h6>").addClass("card-body").text(searchedCity);
+            var card = $("<div>").addClass("card");
+            card.append(cityName);
+
+            $("#searchHistory").append(card)
+
+            cityName.on("click", function(){
+                searchWeather(this.innerHTML);
+            })
+        }
     }
 })
